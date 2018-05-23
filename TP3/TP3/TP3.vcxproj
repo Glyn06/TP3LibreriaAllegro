@@ -93,22 +93,42 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include\allegro5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" "$(SolutionDir)"
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include\allegro5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-debug-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" "$(SolutionDir)"
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -117,13 +137,23 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include\allegro5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(SolutionDir)"
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -132,16 +162,30 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include\allegro5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-5.1.dll" "$(SolutionDir)"
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(SolutionDir)"
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro.h" />
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
