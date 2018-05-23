@@ -26,5 +26,11 @@
     <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro_image.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro_native_dialog.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

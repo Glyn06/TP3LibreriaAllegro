@@ -97,7 +97,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;allegro_dialog-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-debug-5.1.dll" "$(SolutionDir)"
@@ -105,7 +105,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-debug-5.1.dll" 
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-debug-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-debug-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" "$(SolutionDir)"
-
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_dialog-debug-5.1.dll" "$(SolutionDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -118,7 +118,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" 
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro-debug.lib;allegro_color-debug.lib;allegro_image-debug.lib;allegro_main-debug.lib;allegro_video-debug.lib;allegro_dialog-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-debug-5.1.dll" "$(SolutionDir)"
@@ -126,7 +126,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-debug-5.1.dll" 
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-debug-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-debug-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" "$(SolutionDir)"
-
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_dialog-debug-5.1.dll" "$(SolutionDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-debug-5.1.dll" 
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;allegro_dialog.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-5.1.dll" "$(SolutionDir)"
@@ -151,7 +151,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-5.1.dll" "$(Sol
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(SolutionDir)"
-
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_dialog-5.1.dll" "$(SolutionDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -168,7 +168,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(Sol
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro.lib;allegro_color.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;allegro_dialog.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro-5.1.dll" "$(SolutionDir)"
@@ -176,7 +176,7 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_color-5.1.dll" "$(Sol
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_image-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_main-5.1.dll" "$(SolutionDir)"
 copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(SolutionDir)"
-
+copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_dialog-5.1.dll" "$(SolutionDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -185,6 +185,8 @@ copy "$(SolutionDir)Allegro\allegro_5.1.12_x86\bin\allegro_video-5.1.dll" "$(Sol
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro.h" />
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro_image.h" />
+    <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\allegro_native_dialog.h" />
     <ClInclude Include="..\Allegro\allegro_5.1.12_x86\include\allegro5\base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
