@@ -28,10 +28,18 @@ int main(int argc, char **argv) {
 	const int SPEED = 5;
 	int posx=0;
 	int posy=0;
+	int player_collisionBOX_x = posx;							  
+	int player_collisionBOX_y = posy;							  
+	int player_collisionBOX_w = 0;										  
+	int player_collisionBOX_h = 0;
 	bool arrowKeys[4] = { false,false,false,false };
 
 	int ePOSx = 200;
 	int ePOSy = 200;
+	int enemy_collisionBOX_x = ePOSx;								 
+	int enemy_collisionBOX_y = ePOSy;								 
+	int enemy_collisionBOX_w = 0;										 
+	int enemy_collisionBOX_h = 0;
 
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
@@ -66,6 +74,8 @@ int main(int argc, char **argv) {
 		al_destroy_display(display);
 		return 0;
 	}//
+	player_collisionBOX_h = al_get_bitmap_height(image);
+	player_collisionBOX_w = al_get_bitmap_width(image);
 
 	image2 = al_load_bitmap("image2.png");
 	if (!image) {
@@ -74,6 +84,8 @@ int main(int argc, char **argv) {
 		al_destroy_display(display);
 		return 0;
 	}
+	enemy_collisionBOX_h = al_get_bitmap_height(image2);																  
+	enemy_collisionBOX_w = al_get_bitmap_width(image2);
 
 	 //para eventos:
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -146,6 +158,20 @@ int main(int argc, char **argv) {
 			posy += arrowKeys[KEY_DOWN] * SPEED;
 			posy -= arrowKeys[KEY_UP] * SPEED;
 
+			player_collisionBOX_x = player_collisionBOX_w / 2;
+			player_collisionBOX_y = player_collisionBOX_h / 2;
+
+			enemy_collisionBOX_x = enemy_collisionBOX_w / 2;
+			enemy_collisionBOX_y = enemy_collisionBOX_h / 2;
+
+			if (posx + player_collisionBOX_x > ePOSx - enemy_collisionBOX_x &&
+				posx - player_collisionBOX_x < ePOSx + enemy_collisionBOX_x &&
+				posy + player_collisionBOX_y > ePOSy - enemy_collisionBOX_y &&
+				posy - player_collisionBOX_y < ePOSy + enemy_collisionBOX_y)
+			{
+				gameover = true;
+			}
+
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(image2, ePOSx, ePOSy, 0);
@@ -155,13 +181,11 @@ int main(int argc, char **argv) {
 	
 	//
 
-
-
-
-
 	al_destroy_display(display);
 	al_destroy_bitmap(image);
+	al_destroy_bitmap(image2);
 	//evento
 	al_destroy_event_queue(event_queue);
+
 	return 0;
 }
