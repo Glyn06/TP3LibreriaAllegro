@@ -1,0 +1,5 @@
+El personaje no se mueve
+No hay un enemigo
+Los comentarios son medios raros
+El game loop esta desordenado
+No registraba eventos del teclado
