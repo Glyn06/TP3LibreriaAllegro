@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
 	ALLEGRO_DISPLAY *display = NULL;
 	//para imagen:
 	ALLEGRO_BITMAP  *image = NULL;
+	ALLEGRO_BITMAP  *image2 = NULL;
 
 	bool gameover = false;
 
@@ -28,6 +29,9 @@ int main(int argc, char **argv) {
 	int posx=0;
 	int posy=0;
 	bool arrowKeys[4] = { false,false,false,false };
+
+	int ePOSx = 200;
+	int ePOSy = 200;
 
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
@@ -56,13 +60,20 @@ int main(int argc, char **argv) {
 
 	//para imagen:
 	image = al_load_bitmap("image.png");
-
 	if (!image) {
 		al_show_native_message_box(display, "Error", "Error", "Failed to load image!",
 			NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		al_destroy_display(display);
 		return 0;
 	}//
+
+	image2 = al_load_bitmap("image2.png");
+	if (!image) {
+		al_show_native_message_box(display, "Error", "Error", "Failed to load image2!",
+			NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		al_destroy_display(display);
+		return 0;
+	}
 
 	 //para eventos:
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -79,6 +90,7 @@ int main(int argc, char **argv) {
 	//
 	//evento
 	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_bitmap(image2, ePOSx, ePOSy, 0);
 	al_draw_bitmap(image, posx, posy, 0);
 	al_flip_display();
 	while (!gameover)
@@ -136,6 +148,7 @@ int main(int argc, char **argv) {
 
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
+		al_draw_bitmap(image2, ePOSx, ePOSy, 0);
 		al_draw_bitmap(image, posx, posy, 0);
 		al_flip_display();
 		}
