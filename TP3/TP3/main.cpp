@@ -1,21 +1,81 @@
 
 #include <stdio.h>
 #include <allegro5/allegro.h>
-
 #include <iostream>
 using namespace std;
-
 //para una imagen:
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
-//
-//para imput
+
+enum DIR {
+	UP = -1, DOWN = 1, LEFT = -1, RIGHT = 1
+};
+
 enum MYKEYS {
 	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 };
+
+class Bullet
+{
+public:
+	Bullet(int _posX, int _posY, DIR dir);
+	~Bullet();
+	void Draw();
+	void Move();
+	void Update();
+
+private:
+	const int speed = 20;
+	int posX;
+	int posY;
+	int cposX;
+	int cposY;
+	int cposW;
+	int cposH;
+	DIR dir;
+	ALLEGRO_BITMAP  *sprite = NULL;
+};
+
+Bullet::Bullet(int _posX, int _posY, DIR _dir)
+{
+	posX = _posX;
+	posY = _posY;
+	sprite = al_load_bitmap("Bullet.png");
+	cposH = al_get_bitmap_height(sprite);
+	cposW = al_get_bitmap_width(sprite);
+	cposX = cposH / 2;
+	cposY = cposW / 2;
+	dir = _dir;
+}
+
+Bullet::~Bullet()
+{
+	al_destroy_bitmap(sprite);
+}
+
+void Bullet::Draw()
+{
+	al_draw_bitmap(sprite, posX, posY, 0);
+}
+
+void Bullet::Move()
+{
+	if (dir == LEFT || dir == RIGHT)
+		posX += dir;
+	else
+		posY += dir;
+}
+
+void Bullet::Update()
+{
+	Draw();
+	Move();
+}
+
+
 const int dispx = 640;
 const int dispy = 480;
-//
+
 int main(int argc, char **argv) {
 
 	ALLEGRO_DISPLAY *display = NULL;
@@ -33,6 +93,7 @@ int main(int argc, char **argv) {
 	int player_collisionBOX_w = 0;										  
 	int player_collisionBOX_h = 0;
 	bool arrowKeys[4] = { false,false,false,false };
+	DIR direction = UP;
 
 	int ePOSx = 200;
 	int ePOSy = 200;
@@ -119,15 +180,22 @@ int main(int argc, char **argv) {
 			{
 			case ALLEGRO_KEY_DOWN:
 				arrowKeys[KEY_DOWN] = true;
+				direction = DOWN;
 				break;
 			case ALLEGRO_KEY_UP:
 				arrowKeys[KEY_UP] = true;
+				direction = UP;
 				break;
 			case ALLEGRO_KEY_LEFT:
 				arrowKeys[KEY_LEFT] = true;
+				direction = LEFT;
 				break;
 			case ALLEGRO_KEY_RIGHT:
 				arrowKeys[KEY_RIGHT] = true;
+				direction = RIGHT;
+				break;
+			case ALLEGRO_KEY_S:
+
 				break;
 			case ALLEGRO_KEY_ESCAPE:
 				gameover = true;
