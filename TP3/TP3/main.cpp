@@ -71,6 +71,7 @@ int main(int argc, char **argv) {
 	int enemy_collisionBOX_y = ePOSy;								 
 	int enemy_collisionBOX_w = 0;										 
 	int enemy_collisionBOX_h = 0;
+	bool enemy_alive = true;
 
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
@@ -263,9 +264,26 @@ int main(int argc, char **argv) {
 				gameover = true;
 			}
 
+			if (bullet->posX + bullet->cposX > ePOSx - enemy_collisionBOX_x &&
+				bullet->posX - bullet->cposX  < ePOSx + enemy_collisionBOX_x &&
+				bullet->posY + bullet->cposY > ePOSy - enemy_collisionBOX_y &&
+				bullet->posY - bullet->cposY < ePOSy + enemy_collisionBOX_y &&
+											   enemy_alive == true)
+			{
+				bullet->fly = false;
+				bullet->posX = -16;
+				bullet->posY = -16;
+				enemy_alive = false;
+				ePOSx = dispx * 2;
+				ePOSy = dispy * 2;
+			}
+
 		
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_bitmap(image2, ePOSx, ePOSy, 0);
+		if (enemy_alive)
+		{
+			al_draw_bitmap(image2, ePOSx, ePOSy, 0);
+		}
 		al_draw_bitmap(image, posx, posy, 0);
 		al_draw_bitmap(b_image, bullet->posX,bullet->posY, 0);
 		al_flip_display();
