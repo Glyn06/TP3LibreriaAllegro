@@ -7,8 +7,9 @@ using namespace std;
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
 
+int pete = 0;
 enum DIR {
-	UP = -1, DOWN = 1, LEFT = -1, RIGHT = 1
+	UP, DOWN, LEFT, RIGHT
 };
 
 enum MYKEYS {
@@ -18,13 +19,8 @@ enum MYKEYS {
 class Bullet
 {
 public:
-	Bullet(int _posX, int _posY, DIR dir);
-	~Bullet();
-	void Draw();
-	void Move();
-	void Update();
+	Bullet() {};
 
-private:
 	const int speed = 20;
 	int posX;
 	int posY;
@@ -32,45 +28,8 @@ private:
 	int cposY;
 	int cposW;
 	int cposH;
-	DIR dir;
-	ALLEGRO_BITMAP  *sprite = NULL;
+	bool fly;
 };
-
-Bullet::Bullet(int _posX, int _posY, DIR _dir)
-{
-	posX = _posX;
-	posY = _posY;
-	sprite = al_load_bitmap("Bullet.png");
-	cposH = al_get_bitmap_height(sprite);
-	cposW = al_get_bitmap_width(sprite);
-	cposX = cposH / 2;
-	cposY = cposW / 2;
-	dir = _dir;
-}
-
-Bullet::~Bullet()
-{
-	al_destroy_bitmap(sprite);
-}
-
-void Bullet::Draw()
-{
-	al_draw_bitmap(sprite, posX, posY, 0);
-}
-
-void Bullet::Move()
-{
-	if (dir == LEFT || dir == RIGHT)
-		posX += dir;
-	else
-		posY += dir;
-}
-
-void Bullet::Update()
-{
-	Draw();
-	Move();
-}
 
 
 const int dispx = 640;
@@ -82,6 +41,7 @@ int main(int argc, char **argv) {
 	//para imagen:
 	ALLEGRO_BITMAP  *image = NULL;
 	ALLEGRO_BITMAP  *image2 = NULL;
+	ALLEGRO_BITMAP *b_image = NULL;
 
 	bool gameover = false;
 
@@ -94,6 +54,16 @@ int main(int argc, char **argv) {
 	int player_collisionBOX_h = 0;
 	bool arrowKeys[4] = { false,false,false,false };
 	DIR direction = UP;
+	Bullet *bullet = NULL;
+	bullet = new Bullet();
+
+	bullet->fly = false;
+	bullet->posX = -16;
+	bullet->posY = -16;
+	bullet->cposX = bullet->posX;
+	bullet->cposY = bullet->posY;
+	bullet->cposW = 0;
+	bullet->cposH = 0;
 
 	int ePOSx = 200;
 	int ePOSy = 200;
@@ -126,6 +96,16 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "failed to create display!\n");
 		return -1;
 	}
+
+	b_image = al_load_bitmap("Bullet.png");
+	if (!b_image) {
+		al_show_native_message_box(display, "Error", "Error", "Failed to load b_image!",
+			NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		al_destroy_display(display);
+		return 0;
+	}//
+	bullet->cposH = al_get_bitmap_height(b_image);
+	bullet->cposW = al_get_bitmap_width(b_image);
 
 	//para imagen:
 	image = al_load_bitmap("image.png");
@@ -180,22 +160,39 @@ int main(int argc, char **argv) {
 			{
 			case ALLEGRO_KEY_DOWN:
 				arrowKeys[KEY_DOWN] = true;
-				direction = DOWN;
+				if (!bullet->fly)
+				{
+					direction = DOWN;
+				}
 				break;
 			case ALLEGRO_KEY_UP:
 				arrowKeys[KEY_UP] = true;
-				direction = UP;
+				if (!bullet->fly)
+				{
+					direction = UP;
+				}
 				break;
 			case ALLEGRO_KEY_LEFT:
 				arrowKeys[KEY_LEFT] = true;
-				direction = LEFT;
+				if (!bullet->fly)
+				{
+					direction = LEFT;
+				}
 				break;
 			case ALLEGRO_KEY_RIGHT:
 				arrowKeys[KEY_RIGHT] = true;
-				direction = RIGHT;
+				if (!bullet->fly)
+				{
+					direction = RIGHT;
+				}
 				break;
 			case ALLEGRO_KEY_S:
-
+				if (!bullet->fly)
+				{
+					bullet->posX = posx;
+					bullet->posY = posy;
+					bullet->fly = true;
+				}
 				break;
 			case ALLEGRO_KEY_ESCAPE:
 				gameover = true;
@@ -220,7 +217,30 @@ int main(int argc, char **argv) {
 				break;
 			}
 		}
-
+			if (bullet->fly){
+				if (direction == RIGHT)
+				{
+					bullet->posX += bullet->speed;
+				}
+				if (direction == LEFT)
+				{
+					bullet->posX -= bullet->speed;
+				}
+				if (direction == UP)
+				{
+					bullet->posY -= bullet->speed;
+				}
+				if (direction == DOWN)
+				{
+					bullet->posY += bullet->speed;
+				}
+			}
+			if (bullet->posX >= dispx || bullet->posX <= -16 ||
+				bullet->posY >= dispy || bullet->posY <= -16)
+			{
+				bullet->fly = false;
+			}
+			
 			posx += arrowKeys[KEY_RIGHT] * SPEED;
 			posx -= arrowKeys[KEY_LEFT] * SPEED;
 			posy += arrowKeys[KEY_DOWN] * SPEED;
@@ -231,6 +251,9 @@ int main(int argc, char **argv) {
 
 			enemy_collisionBOX_x = enemy_collisionBOX_w / 2;
 			enemy_collisionBOX_y = enemy_collisionBOX_h / 2;
+
+			bullet->cposX = bullet->cposW / 2;
+			bullet->cposY = bullet->cposH / 2;
 
 			if (posx + player_collisionBOX_x > ePOSx - enemy_collisionBOX_x &&
 				posx - player_collisionBOX_x < ePOSx + enemy_collisionBOX_x &&
@@ -244,6 +267,7 @@ int main(int argc, char **argv) {
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(image2, ePOSx, ePOSy, 0);
 		al_draw_bitmap(image, posx, posy, 0);
+		al_draw_bitmap(b_image, bullet->posX,bullet->posY, 0);
 		al_flip_display();
 		}
 	
@@ -252,6 +276,7 @@ int main(int argc, char **argv) {
 	al_destroy_display(display);
 	al_destroy_bitmap(image);
 	al_destroy_bitmap(image2);
+	al_destroy_bitmap(b_image);
 	//evento
 	al_destroy_event_queue(event_queue);
 
