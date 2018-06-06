@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
 	int player_collisionBOX_y = posy;							  
 	int player_collisionBOX_w = 0;										  
 	int player_collisionBOX_h = 0;
+	int player_vidas = 3;
 	bool arrowKeys[4] = { false,false,false,false };
 	DIR direction = UP;
 	Bullet *bullet = NULL;
@@ -281,7 +282,9 @@ int main(int argc, char **argv) {
 				posy + player_collisionBOX_y > ePOSy - enemy_collisionBOX_y &&
 				posy - player_collisionBOX_y < ePOSy + enemy_collisionBOX_y)
 			{
-				gameover = true;
+				player_vidas--;
+				posx = 0;
+				posy = 0;
 			}
 
 			if (bullet->posX + bullet->cposX > ePOSx - enemy_collisionBOX_x &&
@@ -296,6 +299,11 @@ int main(int argc, char **argv) {
 				enemy_alive = false;
 				ePOSx = dispx * 2;
 				ePOSy = dispy * 2;
+			}
+
+			if (player_vidas <= 0)
+			{
+				gameover = true;
 			}
 
 		
