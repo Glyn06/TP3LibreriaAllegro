@@ -42,8 +42,10 @@ int main(int argc, char **argv) {
 	ALLEGRO_BITMAP  *image = NULL;
 	ALLEGRO_BITMAP  *image2 = NULL;
 	ALLEGRO_BITMAP *b_image = NULL;
+	ALLEGRO_BITMAP *menu = NULL;
 
 	bool gameover = false;
+	bool inMenu = true;
 
 	const int SPEED = 5;
 	int posx=0;
@@ -132,6 +134,8 @@ int main(int argc, char **argv) {
 	enemy_collisionBOX_h = al_get_bitmap_height(image2);																  
 	enemy_collisionBOX_w = al_get_bitmap_width(image2);
 
+	menu = al_load_bitmap("menu.png");
+
 	 //para eventos:
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 
@@ -146,16 +150,31 @@ int main(int argc, char **argv) {
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	//
 	//evento
+	ALLEGRO_EVENT ev;
+	ALLEGRO_TIMEOUT timeout;
+
+	while (inMenu)
+	{
+		al_init_timeout(&timeout, 0.06);
+
+		al_wait_for_event_until(event_queue,&ev, &timeout);
+		if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+		{
+			if (ev.keyboard.keycode == ALLEGRO_KEY_ENTER)
+			{
+				inMenu = false;
+			}
+		}
+		al_draw_bitmap(menu, 0, 0, 0);
+		al_flip_display();
+	}
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_bitmap(image2, ePOSx, ePOSy, 0);
 	al_draw_bitmap(image, posx, posy, 0);
 	al_flip_display();
 	while (!gameover)
 	{
-		ALLEGRO_EVENT ev;
-		ALLEGRO_TIMEOUT timeout;
 		al_init_timeout(&timeout, 0.06);
-
 		al_wait_for_event_until(event_queue,&ev, &timeout);
 
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
