@@ -80,6 +80,15 @@ int main(int argc, char **argv) {
 	bool enemy_alive = true;
 	bool enemy_turnaround = false;
 
+	int e2POSx = 400;
+	int e2POSy = 400;
+	int enemy2_collisionBOX_x = ePOSx;
+	int enemy2_collisionBOX_y = ePOSy;
+	int enemy2_collisionBOX_w = 0;
+	int enemy2_collisionBOX_h = 0;
+	bool enemy2_alive = true;
+	bool enemy2_turnaround = false;
+
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
@@ -156,6 +165,8 @@ int main(int argc, char **argv) {
 	}
 	enemy_collisionBOX_h = al_get_bitmap_height(image2);																  
 	enemy_collisionBOX_w = al_get_bitmap_width(image2);
+	enemy2_collisionBOX_h = al_get_bitmap_height(image2);
+	enemy2_collisionBOX_w = al_get_bitmap_width(image2);
 
 	menu = al_load_bitmap("menu.png");
 
@@ -193,6 +204,7 @@ int main(int argc, char **argv) {
 	}
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_bitmap(image2, ePOSx, ePOSy, 0);
+	al_draw_bitmap(image2, e2POSx, e2POSy, 0);
 	al_draw_bitmap(image, posx, posy, 0);
 	al_flip_display();
 	al_play_sample(bck_music, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
@@ -283,6 +295,25 @@ int main(int argc, char **argv) {
 				ePOSx -= ENEMY_SPEED;
 			}
 
+			//
+			if (e2POSy >= dispy - 32)
+			{
+				enemy2_turnaround = true;
+			}
+			if (e2POSy <= 0)
+			{
+				enemy2_turnaround = false;
+			}
+			if (!enemy2_turnaround)
+			{
+				e2POSy += ENEMY_SPEED;
+			}
+			if (enemy2_turnaround)
+			{
+				e2POSy -= ENEMY_SPEED;
+			}
+			//
+
 			if (bullet->fly){
 				if (direction == RIGHT)
 				{
@@ -318,13 +349,20 @@ int main(int argc, char **argv) {
 			enemy_collisionBOX_x = enemy_collisionBOX_w / 2;
 			enemy_collisionBOX_y = enemy_collisionBOX_h / 2;
 
+			enemy2_collisionBOX_x = enemy2_collisionBOX_w / 2;
+			enemy2_collisionBOX_y = enemy2_collisionBOX_h / 2;
+
 			bullet->cposX = bullet->cposW / 2;
 			bullet->cposY = bullet->cposH / 2;
 
 			if (posx + player_collisionBOX_x > ePOSx - enemy_collisionBOX_x &&
 				posx - player_collisionBOX_x < ePOSx + enemy_collisionBOX_x &&
 				posy + player_collisionBOX_y > ePOSy - enemy_collisionBOX_y &&
-				posy - player_collisionBOX_y < ePOSy + enemy_collisionBOX_y)
+				posy - player_collisionBOX_y < ePOSy + enemy_collisionBOX_y ||
+				posx + player_collisionBOX_x > e2POSx - enemy2_collisionBOX_x &&
+				posx - player_collisionBOX_x < e2POSx + enemy2_collisionBOX_x &&
+				posy + player_collisionBOX_y > e2POSy - enemy2_collisionBOX_y &&
+				posy - player_collisionBOX_y < e2POSy + enemy2_collisionBOX_y)
 			{
 				al_play_sample(player_damage, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 				player_vidas--;
@@ -333,7 +371,7 @@ int main(int argc, char **argv) {
 			}
 
 			if (bullet->posX + bullet->cposX > ePOSx - enemy_collisionBOX_x &&
-				bullet->posX - bullet->cposX  < ePOSx + enemy_collisionBOX_x &&
+				bullet->posX - bullet->cposX < ePOSx + enemy_collisionBOX_x &&
 				bullet->posY + bullet->cposY > ePOSy - enemy_collisionBOX_y &&
 				bullet->posY - bullet->cposY < ePOSy + enemy_collisionBOX_y &&
 											   enemy_alive == true)
@@ -344,6 +382,20 @@ int main(int argc, char **argv) {
 				enemy_alive = false;
 				ePOSx = dispx * 2;
 				ePOSy = dispy * 2;
+			}
+			//
+			if (bullet->posX + bullet->cposX > e2POSx - enemy2_collisionBOX_x &&
+				bullet->posX - bullet->cposX < e2POSx + enemy2_collisionBOX_x &&
+				bullet->posY + bullet->cposY > e2POSy - enemy2_collisionBOX_y &&
+				bullet->posY - bullet->cposY < e2POSy + enemy2_collisionBOX_y &&
+				enemy2_alive == true)
+			{
+				bullet->fly = false;
+				bullet->posX = -16;
+				bullet->posY = -16;
+				enemy2_alive = false;
+				e2POSx = dispx * 2;
+				e2POSy = dispy * 2;
 			}
 
 			if (player_vidas <= 0)
@@ -357,6 +409,10 @@ int main(int argc, char **argv) {
 		if (enemy_alive)
 		{
 			al_draw_bitmap(image2, ePOSx, ePOSy, 0);
+		}
+		if (enemy2_alive)
+		{
+			al_draw_bitmap(image2, e2POSx, e2POSy, 0);
 		}
 		al_draw_bitmap(image, posx, posy, 0);
 		al_draw_bitmap(b_image, bullet->posX,bullet->posY, 0);
