@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
 	bullet->cposW = 0;
 	bullet->cposH = 0;
 
+	const int ENEMY_SPEED = 5;
 	int ePOSx = 200;
 	int ePOSy = 200;
 	int enemy_collisionBOX_x = ePOSx;								 
@@ -72,6 +73,7 @@ int main(int argc, char **argv) {
 	int enemy_collisionBOX_w = 0;										 
 	int enemy_collisionBOX_h = 0;
 	bool enemy_alive = true;
+	bool enemy_turnaround = false;
 
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
@@ -218,6 +220,24 @@ int main(int argc, char **argv) {
 				break;
 			}
 		}
+
+			if (ePOSx >= dispx - 32)
+			{
+				enemy_turnaround = true;
+			}
+			if (ePOSx <= 0)
+			{
+				enemy_turnaround = false;
+			}
+			if (!enemy_turnaround)
+			{
+				ePOSx += ENEMY_SPEED;
+			}
+			if (enemy_turnaround)
+			{
+				ePOSx -= ENEMY_SPEED;
+			}
+
 			if (bullet->fly){
 				if (direction == RIGHT)
 				{
