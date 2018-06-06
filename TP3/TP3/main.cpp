@@ -6,6 +6,8 @@ using namespace std;
 //para una imagen:
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
+#include "allegro5/allegro_audio.h"
+#include "allegro5/allegro_acodec.h"
 
 int pete = 0;
 enum DIR {
@@ -82,6 +84,27 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
 	}//
+	if (!al_install_audio())
+	{
+		al_show_native_message_box(display, "Error", "Error", "Failed to load sound!",
+			NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		return 0;
+	}
+
+	if (!al_init_acodec_addon())
+	{
+		al_show_native_message_box(display, "Error", "Error", "Failed to load acodec addon!",
+			NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		return 0;
+	}
+	ALLEGRO_SAMPLE *player_damage = NULL;
+	ALLEGRO_SAMPLE *player_attack = NULL;
+	ALLEGRO_SAMPLE *bck_music = NULL;
+	player_damage = al_load_sample("Player_damage.wav");
+	player_attack = al_load_sample("player_attack.wav");
+	bck_music = al_load_sample("bck_music.wav");
+
+	al_reserve_samples(3);
 
 	if (!al_install_keyboard())    //iniciacion del teclado
 	{
@@ -172,6 +195,7 @@ int main(int argc, char **argv) {
 	al_draw_bitmap(image2, ePOSx, ePOSy, 0);
 	al_draw_bitmap(image, posx, posy, 0);
 	al_flip_display();
+	al_play_sample(bck_music, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
 	while (!gameover)
 	{
 		al_init_timeout(&timeout, 0.06);
@@ -212,6 +236,7 @@ int main(int argc, char **argv) {
 			case ALLEGRO_KEY_S:
 				if (!bullet->fly)
 				{
+					al_play_sample(player_attack, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 					bullet->posX = posx;
 					bullet->posY = posy;
 					bullet->fly = true;
@@ -301,6 +326,7 @@ int main(int argc, char **argv) {
 				posy + player_collisionBOX_y > ePOSy - enemy_collisionBOX_y &&
 				posy - player_collisionBOX_y < ePOSy + enemy_collisionBOX_y)
 			{
+				al_play_sample(player_damage, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 				player_vidas--;
 				posx = 0;
 				posy = 0;
@@ -322,6 +348,7 @@ int main(int argc, char **argv) {
 
 			if (player_vidas <= 0)
 			{
+				al_rest(0.5f);
 				gameover = true;
 			}
 
@@ -342,6 +369,9 @@ int main(int argc, char **argv) {
 	al_destroy_bitmap(image);
 	al_destroy_bitmap(image2);
 	al_destroy_bitmap(b_image);
+	al_destroy_sample(player_damage);
+	al_destroy_sample(player_attack);
+	al_destroy_sample(bck_music);
 	//evento
 	al_destroy_event_queue(event_queue);
 
